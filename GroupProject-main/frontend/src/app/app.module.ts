@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { BasicAuthInterceptorService } from './basic-auth-interceptor.service';
 import { LogoutComponent } from './logout/logout.component';
+import { SearchListComponent } from './search-list/search-list.component';
 
 @NgModule({
   declarations: [
@@ -27,15 +28,25 @@ import { LogoutComponent } from './logout/logout.component';
     DateAgoPipe,
     LoginComponent,
     LogoutComponent,
+    SearchListComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      { path: 'home', component: BlogListComponent },
-      { path: 'post', component: PostFormComponent },
-      { path: 'blogs/:id', component: BlogDetailComponent },
-      { path: 'login', component: LoginComponent },
-    ]),
+    RouterModule.forRoot(
+      [
+        { path: 'login', component: LoginComponent },
+        { path: 'home', component: BlogListComponent },
+        { path: 'post', component: PostFormComponent },
+        { path: 'blogs/:id', component: BlogDetailComponent },
+        {
+          path: 'search/:searchKey',
+          component: SearchListComponent,
+          //canActivate: [AuthenticationGuard],
+          runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+        },
+      ],
+      { onSameUrlNavigation: 'reload' }
+    ),
     FontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,

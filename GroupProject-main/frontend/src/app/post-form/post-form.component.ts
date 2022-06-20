@@ -54,7 +54,7 @@ export class PostFormComponent implements OnInit {
       imageUrl: this.f['image'].value,
       content: this.f['content'].value,
     };
-    this.router.navigate(['home']);
+    this.router.navigate(['']);
     this.blogService.postBlog(blog).subscribe();
   }
   onReset(): void {
